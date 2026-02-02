@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAULT - Digital Forensics & ML</title>
+    <link rel="stylesheet" href="{% static 'vault/css/style.css' %}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">VAULT</div>
+        <ul class="nav-links">
+            <li><a href="#" data-page="home" class="nav-link active">HOME</a></li>
+            <li><a href="#" data-page="about" class="nav-link">ABOUT US</a></li>
+            <li><a href="#" data-page="upload" class="nav-link">UPLOAD</a></li>
+        </ul>
+        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-label">DIGITAL FORENSICS + MACHINE LEARNING</div>
+            <h1>"Our business is <span class="highlight">security</span> of life itself..."</h1>
+            <p>Verify the authenticity of digital media with ease. Detect content and uncover the truth behind every file.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-primary" data-page="upload">
+                    UPLOAD IMAGE
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+                <a href="#" class="btn-secondary" data-page="about">LEARN MORE</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h3>Digital Forensics First</h3>
+                <p>Metadata, ELA, and integrity checks before ML inference.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3>High Accuracy</h3>
+                <p>Advanced neural networks and ensemble scoring.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3>Instant Results</h3>
+                <p>Get verification results in seconds.</p>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>READY TO UPLOAD YOUR IMAGES?</h2>
+            <p>Upload your images and get instant verification results to detect fabricated or AI-generated content.</p>
+            <a href="#" class="btn-primary" data-page="upload">
+                UPLOAD IMAGE
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <section class="about-hero">
+            <h2>ABOUT US</h2>
+            <h1>Meet Our Team</h1>
+            <p>The people behind Vault.</p>
+        </section>
+
+        <section class="team-grid">
+            <div class="team-member"></div>
+            <div class="team-member"></div>
+            <div class="team-member"></div>
+            <div class="team-member"></div>
+        </section>
+
+        <section class="about-content">
+            <h2>About VAULT</h2>
+            <p>Vault provides digital forensics and machine learning analysis for media authenticity. Replace this placeholder with your team and product story.</p>
+        </section>
+    </div>
+
+    <!-- Upload Page -->
+    <div id="upload" class="page">
+        <section class="upload-container">
+            <div class="upload-header">
+                <h1>
+                    <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    IMAGE VERIFICATION
+                </h1>
+                <p>Upload an image to analyze it for fabrication, manipulation, or AI-generated content. Our advanced detection algorithms will scan for authenticity.</p>
+            </div>
+
+            <div class="upload-grid">
+                <div>
+                    <div class="upload-dropzone" id="dropzone">
+                        <svg class="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                        </svg>
+                        <h3>Drop your image here</h3>
+                        <p>or click to browse</p>
+                        <p style="margin-top: 1rem; font-size: 0.85rem;">Supports: JPG, PNG, WEBP, GIF</p>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*">
+                </div>
+
+                <div class="results-panel empty" id="resultsPanel">
+                    <p>Click "Analyze Image" to start verification</p>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    <h3>Multiple Detectors</h3>
+                    <p>Digital forensics + ML algorithms working together.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <h3>High Accuracy</h3>
+                    <p>Advanced neural network analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <h3>Instant Results</h3>
+                    <p>Get verification results in seconds.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>VAULT</h3>
+                <p>"Our business is security of life itself..."</p>
+            </div>
+            <div class="footer-links">
+                <h4>QUICK LINKS</h4>
+                <ul>
+                    <li><a href="#" data-page="home" class="nav-link">HOME</a></li>
+                    <li><a href="#" data-page="about" class="nav-link">ABOUT US</a></li>
+                    <li><a href="#" data-page="upload" class="nav-link">UPLOAD</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>CONTACT US</h4>
+                <p>Do you have any queries or suggestions?</p>
+                <a href="mailto:yourinfo@gmail.com">yourinfo@gmail.com</a>
+                <p style="margin-top: 1rem;">If you need support? Just give us a call.</p>
+                <p>+55 111 222 333 44</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="help-icon">
+        <span style="font-size: 1.5rem;">?</span>
+    </div>
+
+    <script src="{% static 'vault/js/app.js' %}" defer></script>
+</body>
+</html>
