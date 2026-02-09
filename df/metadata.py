@@ -9,17 +9,14 @@ Handles:
 - Software used for editing detection
 """
 from typing import Dict, Any
-
+from PIL import Image, ExifTags
+import io
+import os
+import datetime
 
 def basic_forensics(file_bytes: bytes) -> Dict[str, Any]:
     """
-    Digital forensics entrypoint.
-
-    Extracts and analyzes:
-    - EXIF metadata
-    - File signatures/magic numbers
-    - Embedded thumbnail analysis
-    - Software modification traces
+    Extract EXIF metadata and basic file info.
     
     Args:
         file_bytes: Raw image bytes
@@ -27,17 +24,44 @@ def basic_forensics(file_bytes: bytes) -> Dict[str, Any]:
     Returns:
         Dict containing forensics findings and flags
     """
-    # TODO: Implement EXIF extraction using PIL/Pillow
-    # from PIL import Image
-    # from PIL.ExifTags import TAGS
-    
+    metadata = {}
+    flags = []
+    notes = []
+
+    try:
+        # Load image
+        image = Image.open(io.BytesIO(file_bytes))
+
+        # Extract EXIF
+        exif_data = image._getexif()
+        if exif_data:
+            for tag, value in exif_data.items():
+                decoded = ExifTags.TAGS.get(tag, tag)
+                metadata[decoded] = value
+
+            # Check for camera info
+            camera_make = metadata.get("Make")
+            camera_model = metadata.get("Model")
+            software = metadata.get("Software")
+            gps_info = metadata.get("GPSInfo")
+
+            if camera_make or camera_model:
+                notes.append(f"Camera detected: {camera_make} {camera_model}")
+            if software:
+                notes.append(f"Software used: {software}")
+            if gps_info:
+                notes.append("GPS coordinates detected")
+        else:
+            notes.append("No EXIF metadata found")
+    except Exception as e:
+        flags.append("error_reading_metadata")
+        notes.append(f"Error extracting EXIF: {e}")
+
     return {
         "checks": [
-            {"name": "exif_extraction", "status": "pending"},
-            {"name": "file_signature", "status": "pending"},
-            {"name": "thumbnail_analysis", "status": "pending"},
+            {"name": "exif_extraction", "status": "done" if metadata else "none"}
         ],
-        "metadata": {},
-        "flags": [],
-        "notes": "Placeholder for digital forensics in df/metadata.py",
+        "metadata": metadata,
+        "flags": flags,
+        "notes": notes
     }

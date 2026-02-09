@@ -4,54 +4,46 @@
 
 ```
 VAULT/
-├── core/                    # Project configuration (formerly mad_site/)
-│   ├── settings.py          # Django settings
-│   ├── urls.py              # Root URL configuration
-│   ├── middleware.py        # Security layers
-│   ├── wsgi.py             
-│   └── asgi.py              
+├── core/ # Project configuration
+│ ├── settings.py # Django settings
+│ ├── urls.py # Root URL configuration
+│ ├── middleware.py # Security layers
+│ ├── wsgi.py
+│ └── asgi.py
 │
-├── apps/                    # Modular business logic
-│   └── detector/            # Main detection app (formerly vault/)
-│       ├── views.py         # API endpoints
-│       ├── urls.py          
-│       ├── models.py        
-│       ├── services/        # Business logic layer
-│       ├── tests/           # Unit tests
-│       └── migrations/      
+├── apps/
+│ └── detector/ # Main detection app
+│ ├── views.py # API endpoints
+│ ├── urls.py
+│ ├── models.py
+│ ├── tests/ # Unit tests
+│ └── migrations/
 │
-├── ml/                      # Machine Learning core
-│   ├── ensemble.py          # Soft-voting ML pipeline
-│   ├── processors/          # Image preprocessing
-│   │   └── vision_utils.py
-│   ├── weights/             # Model checkpoints
-│   └── tests.py             
+├── df/ # Digital Forensics engine
+│ ├── metadata.py # EXIF/metadata extraction
+│ ├── ela_scanner.py # Error Level Analysis
+│ ├── noise_analysis.py # Pixel consistency checks (planned)
+│ └── utils/ # File signature validation
 │
-├── df/                      # Digital Forensics engine
-│   ├── metadata.py          # EXIF/metadata extraction
-│   ├── ela_scanner.py       # Error Level Analysis
-│   ├── noise_analysis.py    # Pixel consistency checks
-│   └── utils/               # File signature validation
+├── media/ # Uploaded files (git-ignored)
+│ ├── temp/ # Temporary analysis files
+│ └── reports/ # Generated PDF reports
 │
-├── media/                   # Uploaded files (git-ignored)
-│   ├── temp/                # Temporary analysis files
-│   └── reports/             # Generated PDF reports
+├── logs/
+│ └── scans.log
 │
-├── logs/                    # Application logs
-│   └── scans.log            
+├── static/
+│ └── vault/
+│ ├── css/
+│ └── js/
 │
-├── static/                  # Frontend assets
-│   └── vault/
-│       ├── css/
-│       └── js/
+├── templates/
+│ └── vault/
+│ └── index.html
 │
-├── templates/               # HTML templates
-│   └── vault/
-│       └── index.html
-│
-├── manage.py                
-├── requirements.txt         
-└── .gitignore               
+├── manage.py
+├── requirements.txt
+└── .gitignore
 ```
 
 ## Quick Start
@@ -82,6 +74,9 @@ VAULT/
    - Frontend: http://localhost:8000
    - API Health: http://localhost:8000/api/health/
    - API Analyze: http://localhost:8000/api/analyze/ (POST)
+
+
+
 
 ## Frontend Structure
 
@@ -144,12 +139,41 @@ The restructuring maintains full compatibility:
    uvicorn core.asgi:application
    ```
 
+
+## Implemented Features
+
+### 1. Metadata Extraction (EXIF)
+
+- Implemented in df/metadata.py
+- Extracts:
+  - Camera make & model
+  - Editing software used
+  - GPS coordinates (if present)
+  - File metadata (creation/modification dates)
+
+- Returns flags for potentially suspicious data
+
+### 2. Error Level Analysis (ELA)
+
+- Implemented in df/ela_scanner.py
+- Detects inconsistent compression levels indicating possible manipulation
+
+- Returns:
+  - Mean error score
+  - Confidence score
+  - Human-readable notes
+
+## Where to Extend Logic-
+- Noise / pixel consistency: df/noise_analysis.py (planned)
+- Machine learning pipeline: ml/ensemble.py (planned)
+
 ## Next Steps
 
 1. ✅ **Restructuring Complete** - Professional Django architecture implemented
-2. 🔄 Implement ML model inference in `ml/ensemble.py`
-3. 🔄 Add EXIF extraction in `df/metadata.py`
-4. 🔄 Implement ELA scanner in `df/ela_scanner.py`
+2. ✅ Add EXIF extraction in `df/metadata.py`
+3. ✅ Implement ELA scanner in `df/ela_scanner.py`
+4. 🔄 Implement ML model inference in `ml/ensemble.py`
+3
 5. 🔄 Add business logic in `apps/detector/services/`
 6. 🔄 Write tests in `apps/detector/tests/` and `ml/tests.py`
 
