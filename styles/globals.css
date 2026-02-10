@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --primary: #030213;
+  --secondary: #f0f0f0;
+  --accent: #0066cc;
+  --destructive: #d4183d;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #ffffff;
+  --secondary: #333333;
+  --accent: #66ccff;
+  --destructive: #ff6b6b;
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-white text-black;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+}
+
+.dark body {
+  @apply bg-black text-white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold;
+}
+
+h1 {
+  @apply text-3xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-xl;
+}
+
+button {
+  @apply cursor-pointer transition-colors;
+}
+
+a {
+  @apply text-blue-600 hover:underline;
+}
+
+.dark a {
+  @apply text-blue-400;
+}
