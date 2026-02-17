@@ -1,19 +1,24 @@
-# Node.js
+# ========== NODE.JS ==========
 node_modules/
-npm-debug.log
-yarn-error.log
-package-lock.json
-yarn.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
 
-# Python
+# ========== PYTHON ==========
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
+*.egg
+*.egg-info/
+dist/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -23,55 +28,71 @@ parts/
 sdist/
 var/
 wheels/
-*.egg-info/
-.installed.cfg
-*.egg
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Python virtual environments
 .venv/
 venv/
 ENV/
 env/
+.env
+.env.local
+*.venv
 
-# IDEs
+# ========== ML/DATA FILES (Large, generated) ==========
+# Trained models (too large for git)
+backend/ml/models/*.pt
+backend/ml/models/*.pkl
+backend/ml/models/*.pth
+backend/uploads/
+
+# XGBoost & ML caches
+*.joblib
+
+# ========== IDE & EDITOR ==========
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.sublime-workspace
+*.sublime-project
 .DS_Store
-.env
-.env.local
-.env.*.local
+Thumbs.db
+.project
+.pydevproject
+.settings/
 
-# Build outputs
+# ========== BUILD & DIST ==========
 dist/
 build/
 .next/
 out/
+coverage/
 
-# Runtime
-media/
-uploads/
+# ========== LOGS & TEMP ==========
+*.log
+logs/
 temp/
+tmp/
+cache/
 .cache/
+*.tmp
 
-# OS
-Thumbs.db
+# ========== OS FILES ==========
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
 
-# Documentation (keep only README.md)
-*_SUMMARY.md
-*_VERIFICATION.md
-*_COMPLETE.md
-*_CHANGELOG.md
-*_GUIDE.md
-*_START_HERE.md
-QUICK_START*.md
-MIGRATION*.md
-INTEGRATION*.md
-REFACTORING*.md
-FINAL*.md
-UNIFIED*.md
-guidelines/
-MIGRATION_SUMMARY.md
+# ========== ENVIRONMENT ==========
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
