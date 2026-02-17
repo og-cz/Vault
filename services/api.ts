@@ -9,34 +9,50 @@
 
 export interface FileMetadata {
   name: string;
-  size_bytes: number;
-  content_type: string;
-  md5: string;
-  uploaded_at: string;
+  size: number;
+  sizeReadable: string;
+  type: string;
+  resolution: string;
 }
 
-export interface ForensicsResult {
-  [key: string]: any;
+export interface TestResult {
+  status: "CLEAN" | "WARNING" | "SUSPICIOUS";
+  message: string;
+  technical: string;
 }
 
-export interface MLResult {
+export interface TestResults {
+  cnn_pattern_recognition?: TestResult;
+  ela_error_level_analysis?: TestResult;
+  metadata_forensics?: TestResult;
+  noise_pattern_analysis?: TestResult;
+  visual_artifact_scan?: TestResult;
+  [key: string]: TestResult | undefined;
+}
+
+export interface MLAnalysis {
   prediction: string;
   confidence: number;
-  [key: string]: any;
-}
-
-export interface AnalysisSummary {
-  label: 'authentic' | 'suspicious' | 'fabricated';
-  overall_confidence: number;
-  pipeline_order: string[];
+  models_used: string[];
+  features_extracted: number;
 }
 
 export interface AnalysisResponse {
   status: string;
-  file: FileMetadata;
-  forensics: ForensicsResult;
-  ml_result: MLResult;
-  summary: AnalysisSummary;
+  verdict: "Authentic" | "AI-Generated" | "Suspicious" | "Error";
+  confidence: number;
+  fileInfo: FileMetadata;
+  tests: TestResults;
+  summary?: {
+    total_tests: number;
+    suspicious_flags: number;
+    warning_flags: number;
+    clean_flags: number;
+  };
+  mlAnalysis?: MLAnalysis;
+  md5?: string;
+  timestamp?: string;
+  error?: string;
 }
 
 export interface HealthCheckResponse {
@@ -47,11 +63,11 @@ export interface HealthCheckResponse {
 // API Configuration
 // ============================================================================
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const API_ENDPOINTS = {
-  HEALTH: '/api/health/',
-  ANALYZE: '/api/analyze/',
+  HEALTH: "/api/health",
+  ANALYZE: "/api/analyze",
 };
 
 // ============================================================================
@@ -64,9 +80,9 @@ const API_ENDPOINTS = {
 export async function checkHealth(): Promise<HealthCheckResponse> {
   try {
     const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.HEALTH}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
       },
     });
 
@@ -76,7 +92,7 @@ export async function checkHealth(): Promise<HealthCheckResponse> {
 
     return await response.json();
   } catch (error) {
-    console.error('Error checking health:', error);
+    console.error("Error checking health:", error);
     throw error;
   }
 }
@@ -86,30 +102,32 @@ export async function checkHealth(): Promise<HealthCheckResponse> {
  * @param file - The image file to analyze
  * @returns Analysis results from the backend
  */
-export async function uploadImageForAnalysis(file: File): Promise<AnalysisResponse> {
+export async function uploadImageForAnalysis(
+  file: File,
+): Promise<AnalysisResponse> {
   try {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append("image", file);
 
     const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.ANALYZE}`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
       },
     });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(
-        errorData.error || `Analysis failed with status ${response.status}`
+        errorData.error || `Analysis failed with status ${response.status}`,
       );
     }
 
     const data = await response.json();
     return data as AnalysisResponse;
   } catch (error) {
-    console.error('Error uploading image for analysis:', error);
+    console.error("Error uploading image for analysis:", error);
     throw error;
   }
 }
