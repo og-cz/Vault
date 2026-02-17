@@ -1,59 +1,62 @@
 """
-Error Level Analysis (ELA) Scanner
+backend/df/ela_scanner.py
+==========================
+Error Level Analysis (ELA).
 
-ELA identifies areas of an image with different compression levels,
-which may indicate tampering.
+Re-compresses the image at a known quality and measures the
+pixel-level difference between the original and re-compressed version.
+
+AI-generated or manipulated images often show non-uniform ELA
+(some regions edited at different compression levels than others).
 """
-from typing import Dict, Any
-from PIL import Image, ImageChops, ImageEnhance
+
 import io
+import numpy as np
+from PIL import Image, ImageChops, ImageEnhance
 
-def perform_ela(file_bytes: bytes, quality: int = 90) -> Dict[str, Any]:
+
+def run_ela(image_path: str, quality: int = 95) -> dict:
     """
-    Perform Error Level Analysis on image.
+    Run ELA on a single image.
 
-    Args:
-        file_bytes: Raw image bytes
-        quality: Quality to re-save image for comparison (default 90)
+    Parameters
+    ----------
+    image_path : str  — absolute path to the image
+    quality    : int  — JPEG re-compression quality (default 95)
 
-    Returns:
-        Dict with ELA results
+    Returns
+    -------
+    dict:
+        mean        float  — average pixel difference (higher = more inconsistency)
+        max         float  — maximum pixel difference
+        std         float  — standard deviation of differences
+        suspicious  bool   — True if std > 8.0 (heuristic threshold)
+        quality     int    — JPEG quality used
     """
-    try:
-        original = Image.open(io.BytesIO(file_bytes)).convert("RGB")
+    original = Image.open(image_path).convert("RGB")
 
-        # Save resaved image to memory
-        resaved_io = io.BytesIO()
-        original.save(resaved_io, format="JPEG", quality=quality)
-        resaved_io.seek(0)
-        resaved = Image.open(resaved_io)
+    # Re-compress to a buffer at the given quality
+    buf = io.BytesIO()
+    original.save(buf, format="JPEG", quality=quality)
+    buf.seek(0)
+    recompressed = Image.open(buf).convert("RGB")
 
-        # Compute difference
-        diff = ImageChops.difference(original, resaved)
+    # Pixel-level absolute difference
+    diff     = ImageChops.difference(original, recompressed)
+    diff_arr = np.array(diff, dtype=np.float32)
 
-        # Enhance difference for visibility
-        extrema = diff.getextrema()
-        max_diff = max([ex[1] for ex in extrema])
-        if max_diff == 0:
-            max_diff = 1
-        scale = 255.0 / max_diff
-        diff = ImageEnhance.Brightness(diff).enhance(scale)
+    ela_mean = float(np.mean(diff_arr))
+    ela_max  = float(np.max(diff_arr))
+    ela_std  = float(np.std(diff_arr))
 
-        # Simple confidence score (mean of difference)
-        pixels = list(diff.getdata())
-        mean_diff = sum(sum(pixel) / 3 for pixel in pixels) / len(pixels)
-        confidence = min(mean_diff / 255.0, 1.0)  # 0-1 scale
+    # Heuristic: real screenshots tend to have uniform ELA (low std).
+    # AI-generated or edited images often have patchwork ELA (high std).
+    suspicious = ela_std > 8.0
 
-        return {
-            "ela_performed": True,
-            "mean_error_score": round(mean_diff, 4),
-            "confidence_score": round(confidence, 4),
-            "notes": ["ELA performed successfully"],
-        }
-    except Exception as e:
-        return {
-            "ela_performed": False,
-            "mean_error_score": 0.0,
-            "confidence_score": 0.0,
-            "notes": [f"ELA failed: {e}"]
-        }
+    return {
+        "mean"      : round(ela_mean, 3),
+        "max"       : round(ela_max,  3),
+        "std"       : round(ela_std,  3),
+        "suspicious": suspicious,
+        "quality"   : quality,
+    }

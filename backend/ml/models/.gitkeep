@@ -1,0 +1,6 @@
+# This file ensures the models/ directory is tracked in git
+# Actual .pt model files are ignored (see .gitignore)
+# Place trained CNN models here:
+# - cnn_model_resnet34.pt
+# - cnn_model_efficientnet_b0.pt
+# - cnn_model_mobilenet_v2.pt
