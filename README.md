@@ -1,4 +1,7 @@
-# VAULT
+<img src="README_IMG.jpg" alt="README_IMG.jpg">
+
+
+<!-- # VAULT
 
 Complete AI Receipt Detection system with:
 
@@ -685,3 +688,4 @@ const API_BASE_URL = "http://localhost:8000";
 MODELS_DIR = Path(__file__).parent / "models"
 XGBOOST_MODEL = "path/to/xgboost_model.pkl"
 ```
+ -->
