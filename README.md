@@ -1,4 +1,4 @@
-<img src="README_IMG.jpg" alt="README_IMG.jpg">
+<img src="README_IMG.png" alt="README_IMG">
 
 <!-- # VAULT
 
